@@ -1,4 +1,6 @@
-                                                PROJECT SETUP 
+                                            PROJECT SETUP 
+
+                                              A. Basic Setup  
 
 1. When storing images via a third-party service like AWS, Azure, or Cloudinary, the typical approach involves temporarily saving uploaded photos and videos on your server. This ensures that if a user's connection is lost during the upload process, the files are still retained. Once successfully received, the files are then uploaded to Cloudinary (or another cloud provider) using a designated process. Some companies choose to upload files directly to Cloudinary without temporary local storage, depending on their standards and requirements.
 
@@ -24,3 +26,27 @@ whenever you change the file the server need to be start or stop for reloading o
 9. .env and type:module they don't get along so you can't easily import ES6 import 'dotenv/config' you need to use require('dotenv').config() [https://www.npmjs.com/package/dotenv]
 
 ====================================================================================================================
+                           B. Professional Structure for Project                                                 
+
+10 . Basic command : ls(to list content  ) , cd .. (to go one step back to the parent directory ) cd src (this will move you to src directory if it exist ), mkdir(to make a folder)
+
+11. controllers -> majorly functionality, db -> how to connect database all the logic written here (MongoDB, PostgresSQL), middlewares->(to run the code in between for example to check in the between when you get the request from the server eg you get request  when you were asking to server now using middlewares in middle to get the cookies so that if you are capable of using that infomation ), models , routes-('/', '/instagram') we use separate folder for that cus in production its gonna be huge , utils->(utilities) you need a lots of utilities like file upload is one utility, like for mailing, like for taking and giving tokens those things that are being repeat why not to to create a file folder and use it and that is called utilities,  all the professional grade project you get this Utils 
+
+11. Prettier -> Its a plugin (mostly said it is a VS code extention use that one) but when you are writing professional grade code you don't write alone, you write with other memeber as well so for eg. if somone used semicomma and someone didn't in JS then when you mergin in the git there would be lots of conflict so team need to be in a same phase which spacing are we using two spacing or four spacing (Tap) this communication is needed, also like if one has two spacing and the other have four spacing there would be crazy amount of conflict working in the same file so use Prettier setting per project basic so we install prettier, 
+
+It is also a Dev dependency majorly so we do npm i -D prettier instead of just npm i prettier for dependency and you need to add two three file manaully  one is (.prettierrc) and rc at last 
+{
+    "sigleQuote": false,
+    "bracketSpacing": true,
+    "tablWidth": 2,
+    "trailingComma": "es5",
+    "semi": true
+} 
+
+another one is .prettierignore (in which files not to implement prettier) like /.vscode
+/node_modules
+./dist
+
+*.env
+.env
+.env.*
