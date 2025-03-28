@@ -1,0 +1,26 @@
+                                                PROJECT SETUP 
+
+1. When storing images via a third-party service like AWS, Azure, or Cloudinary, the typical approach involves temporarily saving uploaded photos and videos on your server. This ensures that if a user's connection is lost during the upload process, the files are still retained. Once successfully received, the files are then uploaded to Cloudinary (or another cloud provider) using a designated process. Some companies choose to upload files directly to Cloudinary without temporary local storage, depending on their standards and requirements.
+
+2. In Git, folders are not tracked directly—only files are. If you create a folder and add an empty subfolder inside it, Git will not recognize or track those folders unless they contain at least one file. This means an empty subfolder serves no purpose in Git since it won’t be included in version control. If you need Git to track an empty folder, a common practice is to add a placeholder file (like .gitkeep). and it should be under the subfolder
+
+3. .gitignore is used to exclude sensitive files and other unnecessary files from being tracked by Git. This includes API keys, configuration files, environment variables, and other confidential data that should not be pushed to a remote repository for security reasons (.gitignore generator-https://mrkandreev.name/snippets/gitignore-generator/#Node)-Using a .gitignore generator saves time and ensures you don’t accidentally commit unnecessary or sensitive files.Different technologies (like Node.js, Python, or React) have their own sets of files that should be ignored, such as: Node.js projects: node_modules/, .env, .DS_Store, and dist/. , React projects: build/, .env, and .next/ (for Next.js).
+
+4. .env files are used to store environment variables, such as API keys, database credentials, and other sensitive information. When deploying to production, these environment variables should not be stored in the source code but should be set up in the server or cloud provider (e.g., AWS, DigitalOcean). This ensures security by keeping sensitive data outside the codebase.
+
+Modern version control platforms like GitHub now warn users if they attempt to push .env files, helping prevent accidental exposure of sensitive information."
+
+5. src/ is a common directory used to store source files in a project. If you are using Git Bash( Best if you’re familiar with Linux/macOS commands and working with Git.) and run the following command inside your project folder:
+cd src && touch app.js constants.js index.js
+This will navigate to the src/ directory (if it exists) and create three empty files: app.js, constants.js, and index.js."
+
+6. Package.json -> How to open using script also in JavaScript there is two kind of syntax for import one is(CommonJS (CJS)) and ES Modules (ESM), for this project gonna use Module so that there will be consistent for that "type": "module" 
+whenever you change the file the server need to be start or stop for reloading or seeing that changes, so to handle that (newly update in Node js --watch to handle that problem) but in the production grade it hasn't been that used so people use the utiliy called (nodemon)-https://www.npmjs.com/package/nodemon (what it does is)- whenever you file is save it restart the server that all it does.
+
+7. Difference in dev dependency( These are packages needed only during the development phase. They are not required in production. These packages are typically used for tasks like testing, building, or development tools. for example nodemon ) and dependency(These are packages that your application needs to run in both development and production environments. They are required for the application to function properly. for example : express, mongoose ) and if its npm i nodemon then it will install in dependency so nned to install nodemon as a development dependency as npm install --save-dev nodemon  or npm i -D nodemon 
+
+8. In the scripts section of package.json, you can create custom commands to run specific tasks. Instead of using the default test command, you can add a dev command to automatically restart your server using nodemon whenever you make changes to your files. we use "dev": "nodemon src/index.js" -> this says nodemon whenever I make some changes in the file then you restart the server after typing [npm start dev]
+
+9. .env and type:module they don't get along so you can't easily import ES6 import 'dotenv/config' you need to use require('dotenv').config() [https://www.npmjs.com/package/dotenv]
+
+====================================================================================================================

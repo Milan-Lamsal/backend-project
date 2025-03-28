@@ -1,0 +1,18 @@
+{
+  "name": "backend-project",
+  "version": "1.0.0",
+  "description": "setting up a professional backend project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "javascript",
+    "backend"
+  ],
+  "author": "Milan Lamsal",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
