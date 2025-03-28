@@ -50,3 +50,50 @@ another one is .prettierignore (in which files not to implement prettier) like /
 *.env
 .env
 .env.*
+
+====================================================================================================================
+                                          How to connect database in MERN 
+
+12. MongoDB Atlas (gives online Database), In MongoDB we use moslty Network Access and Database Access 
+
+13. In MongoDB Atlas you need two things : a. IP address allow so that you can access  and b. correct ID, Password and ofcourse URL  and go to datbase or overview and connect 
+
+14. In professional settings, when you add an Ip address, it typically done for a specific machine where the backend code is hosted. In production-grade settings, you avoid allowing acess from anywhere for security reasons. In some cases, for testing or if we need to check something, we temporarily allow certain Ips for 6hours or 10 hours.
+
+15. Connecting to Dabatabse take the URL from the overview -> connect-> compass  and  remove the / at the end while putting in .env also PORT="Number"
+
+16. Need to have a name of Database so in Constants we kept export const DB_Name - "videotube"
+
+                                            Two approach to connect database
+1. One approach is that we put all the code inside the index file because we are going to execute the index file 1st through node . So we can put all the code inside the index file and as soon as my index file loads, the function where we have written all the database connection code will execute immediately.
+
+2.The second approach is to create a folder named "DB" where the database connection function inside it and then import that function into the index file and execute it there.Both approaches have their pros and cons. If you write the code separately, the code will be clean, well distributed and modular, which is better professional approach. But if you want, you can also put everything inside the index file.
+
+17. App.js will be through express and Database Connection will be through mongoose.We also need npm package of .env(dotenv), mongoose and express 
+connecting Mongoose with database - mongoose.connect('mongodb://127.0.0.1:27017/myapp');  instead of local host we will give alas URL 
+
+
+                                                 Database 
+                                REMEMEBER TWO THINGS ((Try Catch and async await ))
+The first thing is that whenever you try to interact with database, problems can arise. This means you should wrap it in try catch  block which is much better approach. Now whether you use try catch or promises both can handle errors because errors are handled there as well using resolve and reject. So you must use one of the two. 
+
+The second thing is that the database is always in another continent. This means that database interaction take time so using a async await is necessary. It is always a better approach to wrap database interactions in try catch and ensure proper handling with a async await.  
+
+18. Never connect DB in one line, also remember try putting ; in IIFE ;()() for cleaning purpose also  Mongoose give return object
+
+Database server for production, development Testing are Different in each 
+
+dotenvironemnt .env -> As early as possible in your application, import and configure dotenv:This is an environment variable what we need is as soon as our applicaiton load at the same time all the environment variable should be available if it is available in the main file then all will get accesss, so the first file which load which is index.js in the same file we load environment variable
+
+using experimental feautres 
+as import 'dotenv/config' in not in used much so what we can do is in the package.json in script what you can do is scripts : "dev": 'nodemon -r dotenv/config --experimental-json-modules src/index.js' why we doing to make it consistent: maybe no need --experimental-json-modules  it ealier version it needed to make consistent.
+
+import dotenv from "dotenv"
+import connectDB from "./db";
+
+dotenv.config({
+    path: './env'
+})
+
+when you you change something in .env you have to restart the server nodemon doesn't help there
+
