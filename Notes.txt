@@ -143,5 +143,28 @@ Redirection messages (300 – 399)
 Client error responses (400 – 499)
 Server error responses (500 – 599)
 
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                                            Working with models
+                                    
+mongoose-aggregate-paginate-v2
+https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
+
+
+bcrpt - A bcrypt library for Nodejs
+bcrptjs- Optimized bcrypt in plain js with zero dependencies. Compatible to 'bcrypt' 
+
+bcrypt is a password hashing library used to securely store passwords in a database. Instead of saving raw passwords (which is very unsafe), bcrypt converts passwords into an unreadable format (hash), making them difficult for attackers to crack.
+
+Token key - jsonwebtoken -npm i jsonwebtoken  -Used for secure login, user authorization, and API security. -> 
+
+A Bearer Token in JWT is like a digital key that allows a user to access protected resources (APIs, routes, etc.). It is included in the Authorization header when making requests to the serve
+The word "Bearer" means whoever holds this token has access. If someone has your token, they can use it to access protected resources without needing a username & password.
+
+
+                                Middleware pre hook 
+Just before your data save, you can use this pre hook so as to make your password encrypt 
+
+SHA256-HA-256 (Secure Hash Algorithm 256-bit) is a cryptographic hash function that converts input data into a 256-bit (32-byte) fixed-length hash. It is widely used for data integrity, password hashing, digital signatures, and blockchain security.
+
 
 
