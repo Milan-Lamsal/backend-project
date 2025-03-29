@@ -97,3 +97,51 @@ dotenv.config({
 
 when you you change something in .env you have to restart the server nodemon doesn't help there
 
+=====================================================================================================================
+                                        EXPRESS-> https://expressjs.com/en/5x/api.html
+
+19.  Mostly you will be in API reference, and there are two main that you gonna use it which is REQUEST AND RESPONSE
+
+a.Request -
+ it s an object that contains all the details of an incoming HTTP request send by a client (browser,Postman, frontend app, etc). It includes infomation like the method(GET, POST,etc), URL, query parameters(?search=express), route parameters (/users/:id), body data (sent in POST requests), and headers (like authentication tokens). The server reads this data to understand what the client wants and responds accordingly. For example, in a login form, req.body helps retrieve the username and password submitted by the user. Without req, the server wouldn’t know what the client is requesting
+
+  req.params ->(whenever the request comes from URL it comes from req.params)where params means parameters  like /users/:id, "/products/:category/:id
+
+ req.body ->req.body holds the data sent by the client in the body of the request, It’s essential for handling data when the client sends data to the server, such as logging in, submitting a form, or uploading a file! 
+
+ req.cookies -> Cookies are small pieces of data that the server can store in the client’s browser and send back with subsequent requests. They are often used for things like authentication (storing login sessions) or remembering user preferences. To work with cookies in Express, you typically use the cookie-parser middleware to parse the cookies and make them available in req.cookies. ->npm i cookies-parser
+
+ CORS -CORS is a security feature that manages cross-origin requests between different domains.CORS ensures that only trusted websites can make requests to your server, preventing malicious activity from untrusted sources!
+ npm i cors
+
+ You use app.use(cors()0)// Global Middleware: You use app.use() when you want to apply the middleware to all incoming requests, regardless of the route.
+
+ CORS_ORIGIN =*  here star mean from anywhere 
+
+  Middleware
+ Middleware in Express is like a helper function that runs between receiving a request and sending a response. It can modify, check, or handle the request before it reaches the final route handler.
+Think of middleware as a checkpoint where you can: ✅ Process incoming requests (e.g., check if a user is logged in)
+
+             (err, req, res, next) 
+next → Calls the next middleware function in the stack.
+
+
+b. Responds->
+In Express.js, a response (res) is an object that allows the server to send data back to the client after processing a request. It can send plain text, JSON, HTML, status codes, or even redirect the client to another page. For example, res.send("Hello!") sends a simple text response, while res.json({ message: "Success" }) sends JSON data. The response also includes status codes like res.status(404).send("Not Found") to indicate errors. Without res, the client wouldn’t receive any output from the server, making it essential for communication between the backend and frontend! 
+
+
+20. Utility ->In backend development, the utils (short for utilities) folder is used to store helper functions, reusable modules, and utility scripts that are not tied to a specific route or database model. These functions simplify code, promote reusability, and keep the project organized.
+
+
+                               To control error 
+21 Nodejs api error -https://nodejs.org/api/errors.html#class-error
+
+22. Server Status Code 
+Informational responses (100 – 199)
+Successful responses (200 – 299)
+Redirection messages (300 – 399)
+Client error responses (400 – 499)
+Server error responses (500 – 599)
+
+
+
