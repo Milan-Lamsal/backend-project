@@ -24,4 +24,17 @@ app.use(express.static("public"))// STATIC -> sometimes we want to store file an
 
 app.use(cookieParser())
 
+//routes import this way 
+import userRouter from "./routes/user.routes.js"
+
+//routes declaration
+// app.get//  when routes and controller was used in the same file then we were writing in this way but  now when wer are using import then we will be using middlewares to bring routes instead of app.get we use app.use
+
+app.use("/api/v1/users", userRouter) //(we define api and version its a good practice)
+
+// http://localhost:8000/api/v1/users/register
+// http://localhost:8000/api/v1/users/login
+
+
+
 export { app }

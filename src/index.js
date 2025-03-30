@@ -1,6 +1,7 @@
 // require('dotenv').config({ path: './env' }) this make code in consistent as you using both module and common js 
 import dotenv from "dotenv"
 import connectDB from "./db/db_index.js";
+import { app } from "./app.js";
 
 //configuring Environment Variables
 dotenv.config({

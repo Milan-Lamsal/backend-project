@@ -193,3 +193,48 @@ Alternative: Direct Upload: The transcript acknowledges that it is technically p
 
 By using multer we gonna creat Middleware - for registration 
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                              Router and controllers
+This section marks the start of learning how to write controllers in the back-end journey. Writing more controllers is an exercise for logic building. Logic building involves breaking down large problems into smaller phases and solving them step-by-step
+
+Practical Example: Registering a User
+will focus on the task of registering a user as a practical example,Even a seemingly simple task like user registration has many sub-parts
+
+Creating the User Controller
+
+A new file named user.controller.js is created within a controllers folder.
+An asyncHandler helper file (assumed to be pre-existing) is imported to handle asynchronous requests and responses, potentially simplifying promise and error handling.
+A method named registerUser is created within the controller.
+
+The syntax used in registerUser will be commonly repeated.
+registerUser uses the asyncHandler higher-order function, which accepts a function with request and response parameters.The initial implementation of registerUser sends a 200 status code and a JSON response with the message "OK".The registerUser function is exported from user.controller.js
+
+Setting up User Routes
+
+A new folder named routes is created to organize route definitions.A new file named user.routes.js is created for user-related routes.An Express Router is imported and instantiated.The created Router is exported as the default from user.routes.js.Separating routes improves code manageability
+ntegrating Routes in app.jsIn app.js, routes are typically imported after other middleware.
+The userRouter is imported from user.routes.js. The .js extension is included in the import statement.
+app.use() is used to mount the userRouter as middleware under the path /api/v1/users. This prefix includes API versioning as a good practice.
+When a request hits /api/v1/users, the userRouter handles it.
+Within userRouter in user.routes.js, the route /register is defined using router.route('/register').
+The POST method is associated with the /register route using .post(), and the registerUser controller function is specified to handle these requests
+Running the application initially resulted in an error: "Router.post requires a callback function".
+The debugging process involved systematically checking import statements and function definitions.
+The root cause was an issue in the asyncHandler higher-order function, where it was not properly returning the accepted function.
+After adding a return statement to the asyncHandler, the server started running.
+The speaker emphasized reading error messages carefully and checking potential issues like database connection, credentials, and file imports
+
+Testing the API Endpoint with Postman
+
+Postman is used as the primary tool to test the API endpoint, described as an industry standard. Thunder Client is mentioned as a VS Code plugin alternative.
+•
+A POST request needs to be sent to http://localhost:8000/api/v1/users/register (adjusting the port if necessary).
+•
+Sending a GET request by mistake resulted in a "Cannot GET" error, highlighting the importance of matching the HTTP method.
+•
+Upon sending a POST request, the server responded with a 200 OK status and the JSON message {"message": "Okay"} (later changed to {"message": "Chai aur Code"}).
+•
+The response details in Postman (status code, headers, body, time taken) are noted.
+•
+Demonstrations showed how changing the status code in the controller (e.g., to 400 or 500) is reflected in Postman
