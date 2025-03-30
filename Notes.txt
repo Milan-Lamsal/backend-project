@@ -144,7 +144,7 @@ Client error responses (400 – 499)
 Server error responses (500 – 599)
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-                                            Working with models
+ 23                                           Working with models
                                     
 mongoose-aggregate-paginate-v2
 https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
@@ -167,4 +167,29 @@ Just before your data save, you can use this pre hook so as to make your passwor
 SHA256-HA-256 (Secure Hash Algorithm 256-bit) is a cryptographic hash function that converts input data into a 256-bit (32-byte) fixed-length hash. It is widely used for data integrity, password hashing, digital signatures, and blockchain security.
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+24                              Cloudinary - for uploading file and images and many more
+                              npm i Cloudinary
+
+Two packages needed for uploading files in the backend 
+1. express-fileupload -http://npmjs.com/package/express-fileupload
+2. Multer -npm i multer (mosstly used )
+
+ a two-step strategy for file uploads in a production environment: first, temporarily saving the file on the backend server and then uploading it to Cloudinary.
+Here's what the transcript says about this process:
+•
+User Upload via Multer: When a user uploads a file, the backend uses Multer middleware to receive the file and save it temporarily on the local server's file system.
+•
+Temporary Local Storage: This temporary storage is achieved using Multer's disk storage engine, which allows specifying a destination folder (e.g., public/temp/) on the server to save the incoming file.
+•
+Rationale for the Two-Step Approach: The primary reason for this two-step process is to enhance resilience and provide an opportunity for retries. If the subsequent upload to Cloudinary fails for any reason, the file is already present on the server, making it possible to attempt the upload again. This is described as a common practice in production-grade server
+
+
+Cloudinary Upload: After the file is temporarily saved on the server, the backend then uses the Cloudinary SDK to take the local file path and upload the file to the Cloudinary service. The uploadOnCloudinary utility function is designed to handle this step.
+•
+Local File Removal: After a successful (or even failed) attempt to upload to Cloudinary, the transcript emphasizes the importance of deleting the temporarily saved file from the local server using Node.js's fs.unlinkSync() method. This prevents the accumulation of potentially corrupted or unnecessary files on the server's disk. fs -> file system helps  where you can read write delete and update 
+
+Alternative: Direct Upload: The transcript acknowledges that it is technically possible to directly upload the file from Multer to Cloudinary without the intermediate local storage step. However, it notes that the two-step approach is more common in production settings for the reasons mentioned above
+
+By using multer we gonna creat Middleware - for registration 
 

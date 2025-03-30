@@ -17,7 +17,7 @@ class ApiError extends Error {
             this.errors = errors
 
         //production grade
-        if (statck) {
+        if (this.stack) {
             this.stack = stack
         } else {
             Error.captureStackTrace(this, this.constructor)
