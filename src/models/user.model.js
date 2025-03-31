@@ -57,7 +57,7 @@ userSchema.pre("save", async function (next) {
     //take password and encrypt 
     if (!this.isModified("password")) return next();
 
-    this.password = bcrypt.hash(this.password, 10) // 
+    this.password = await bcrypt.hash(this.password, 10)// as it takes time to encrypt to await 
     next()
 
 
@@ -97,4 +97,4 @@ userSchema.methods.generateRefreshToken = function () {
 
 }
 
-export const User = mongoose.model("User", userSchema)
+export const User = mongoose.model("User", userSchema) // as this user has been created through mongoose so it can contact with database
