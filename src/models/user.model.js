@@ -1,6 +1,9 @@
 // https://app.eraser.io/workspace/uSx3Dnf4uijx5EtdtpsM -> This is the Model we using 
 import mongoose, { mongo, Schema } from "mongoose";
-import { JsonWebTokenError } from "jsonwebtoken";
+// import { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+const { JsonWebTokenError } = jwt;
+
 import bcrypt from "bcrypt"
 
 const userSchema = new Schema(

@@ -1,8 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js"
-import { ApiError } from "../utils/ApiError.js"
+import { ApiError } from "../utils/ApiErrors.js"
 import { User } from "../models/user.model.js"
-import { User } from "..models/user.model.js"
-import { uploadOnCloudinary } from "..utils/cloudinary.js"
+
+import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 
 
@@ -18,6 +18,7 @@ const registerUser = asyncHandler(async (req, res) => {
     //return respose
 
     //1 get user details from fronted  (you can get the details from postman )
+    //Extracted all the datapoints from req.body  
     const { fullName, email, username, password } = req.body
     console.log("email:", email) // you can only handle data not file if you want to handle file so how can we do ?
     //we use Routes for that 
@@ -28,7 +29,7 @@ const registerUser = asyncHandler(async (req, res) => {
     // } As validating for all gonna take do lots of if else so rather we wil  be doing in this way:
 
     if (// check this and return true or false 
-
+        //checking if someone kept empty string 
         [fullName, email, username, password].some((field) =>
             field?.trim() === "")
     ) {
@@ -36,17 +37,26 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // check if the user already exist or not
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
     if (existedUser) {
         throw new ApiError(409, "User with email or username already exist ")
     }
-    // Now Images 
-    const avatarLocalPath = req.files?.avatar[0]?.path;     // because of multiple we can access files 
-    const coverImageLocalPath = req.files?.coverImage[0]?.path; // [0] first property 
+    console.log(req.files);
 
-    //check avatar
+    // Now Images - called optional chaining 
+    //taking out localpath and tried uploading 
+    const avatarLocalPath = req.files?.avatar[0]?.path;     // because of multiple we can access files 
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path; // [0] first property 
+
+    let coverImageLocalPath;
+    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+        coverImageLocalPath = req.files.coverImage[0].path
+    }
+
+
+    //check avatar is present if not throw error or else upload to cloudinary 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required")
     }
@@ -59,7 +69,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Avatar file is required")
     }
     // create user object - Entry in database ,where user is taking with database 
-    const user = User.create({
+    const user = await User.create({
         fullName,
         avatar: avatar.url, // just send URL or avatar 
         coverImage: coverImage?.url || " ", // as it not required so not empty

@@ -35,7 +35,6 @@ app.use("/api/v1/users", userRouter) //(we define api and version its a good pra
 // http://localhost:8000/api/v1/users/register
 // http://localhost:8000/api/v1/users/login
 
-//Day4
 
 
 export { app }

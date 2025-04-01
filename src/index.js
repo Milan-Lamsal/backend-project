@@ -5,7 +5,7 @@ import { app } from "./app.js";
 
 //configuring Environment Variables
 dotenv.config({
-    path: './env',
+    path: './.env',
 })
 
 //Connecting to MongoDB 
