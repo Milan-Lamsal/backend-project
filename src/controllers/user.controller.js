@@ -198,7 +198,7 @@ const logoutUser = asyncHandler(async (req, res) => {//middleware
 const refreshAccessToken = asyncHandler(async (req, resp) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
-    if (incomingRefreshToken) {
+    if (!incomingRefreshToken) {
         throw new ApiError(401, "unauthorized request")
     }
     //verifying DECODED TOKEN

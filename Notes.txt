@@ -523,3 +523,6 @@ Review Git commit history to trace code changes.
 Check import statements (including file extensions like .js if required).
 Verify conditional logic and ensure all necessary validation steps are in place.
 Step-by-step debugging is crucial for backend development.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                     Subscription 
