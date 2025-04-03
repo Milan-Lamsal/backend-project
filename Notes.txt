@@ -780,7 +780,37 @@ Manage complex data joins between multiple collections.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                              Postman
--It is easily to test in route 
+-Postman for Testing: Testing during development will be done using Postman as full testing isn't possible until the application is complete.
 
+-2. Testing Existing User Routes with Postman:
 
+Login Route: The login functionality was tested and confirmed working, with tokens being received correctly, even without handling cookies on the client side.
+
+Logout Route Issue: Initially, the logout route showed an "undefined" value. The issue was resolved by using MongoDB’s $unset operator to remove the field instead of setting it to null or undefined.
+
+Other User Routes: Routes like refresh token, current user, password change, account update, avatar update, and channel profile were tested and fixed.
+
+Minor Bug Fixes: Bugs like image path issues were fixed, and console log statements were removed.
+
+User Routes Completion: The user routes are now considered complete after these fixes.
+
+3.Creation of New MongoDB Models:
+
+Playlist Model: A model for playlists with a unique ID, name, description, timestamps, user ID (owner), and an array of video IDs. Aggregation pipelines will be used to retrieve video details.
+
+Comments Model: A model for comments that includes a unique ID, content, timestamps, a reference to the video (video ID), and a reference to the owner (user ID). Pagination will be handled with the mongoose-aggregate-paginate-v2 plugin.
+
+Likes Model: A model that represents likes for comments, videos, or tweets. It includes a reference to the user who liked the content and timestamps.
+
+Tweets Model: A model for tweets that contains a unique ID, content, timestamps, and a reference to the user (owner).
+
+4.Model Schema and Implementation Details:
+
+Model Creation: The instructor used the touch command to generate the model files (comment.model.js, liked.model.js, playlist.model.js, and tweet.model.js).
+
+Schema Definition: Each model was created using mongoose.Schema.
+
+References and Plugins: The mongoose-aggregate-paginate-v2 plugin was added to the comment model for pagination. References to other models (User, Video, Tweet) were added using Schema.Types.ObjectId.
+
+Timestamps: The timestamps: true option ensures automatic handling of createdAt and updatedAt.
 
