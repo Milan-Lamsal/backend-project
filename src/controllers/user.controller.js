@@ -176,8 +176,8 @@ const logoutUser = asyncHandler(async (req, res) => {//middleware
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {//mongodb operator
-                refreshToken: undefined
+            $unset: {//mongodb operator // before it was set but we changed to unset and gave flag 1
+                refreshToken: 1 // this removes the field from document  before it was -undefined, 
             }
         },
         {
@@ -412,8 +412,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
                         $size: "$subscribedTo"
                     },
                     isSubscribed: {
-                        $condition: { // three parameters if then and else 
-                            if: { $in: [req.user?._id, " $subscribers.subscriber"] }, // this is array as well as in object but here we looked in object 
+                        $cond: { // three parameters if then and else 
+                            if: { $in: [req.user?._id, "$subscribers.subscriber"] }, // this is array as well as in object but here we looked in object 
                             then: true,
                             else: false
 
