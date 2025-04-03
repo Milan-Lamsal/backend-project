@@ -637,3 +637,7 @@ Use $project to return only relevant fields like username, email, avatar, etc.
 Aggregation pipelines return arrays of documents, even if only one document matches.
 In application logic, access the first element of the resulting array.
 Check if the username exists before processing.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                              How to write sub pipelines and routes
+Nested lookup -> 
