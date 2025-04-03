@@ -266,7 +266,11 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => {
     return res
         .status(200)
-        .json(200, req.user, "current user fetched successfully")
+        .json(new ApiError(
+            200,
+            req.user,
+            "current user fetched successfully"
+        ))
 })
 
 //if files are updating then try to put in separate in controller in professional development 
@@ -276,7 +280,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     if (!fullName || !email) {
         throw new ApiError(400, "All fields are required")
     }
-    const user = User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
             $set: { ////receive object 
@@ -298,6 +302,8 @@ const updateUserAvatar = asyncHandler(async (res, req) => {
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is missing ")
     }
+
+    // delete old image TODO making utility function 
 
     const avatar = await uploadOnCloudinary(avatarLocalPath)
 
@@ -357,6 +363,92 @@ const updateUserCoverImage = asyncHandler(async (res, req) => {
 
 })
 
+const getUserChannelProfile = asyncHandler(async (req, res) => {
+    const { username } = req.params // url params
+
+    if (!username?.trim()) {
+        throw ApiError(400, "username is missing")
+    }
+
+    //Total no of subscribers 
+    //pipline aggregation 
+    const channel = await User.aggregate(
+        [
+            { // match the user
+                $match: {
+                    username: username?.toLowerCase()
+                },
+
+
+            },
+
+            {
+                //how many subscribers through channel
+                $lookup: {
+                    from: "subscriptions", // ass all the model becomes lowercase and pluars so Subscription became subscription
+                    localField: "_id",
+                    foreignField: "channel",
+                    as: "subscribers"
+                }
+            },
+
+            {// how many have you subscribedTo, through subscriber 
+                $lookup: {
+                    from: "subscriptions", // ass all the model becomes lowercase and pluars so Subscription became subscription
+                    localField: "_id",
+                    foreignField: " subcriber",
+                    as: "subscribedTo"
+                }
+            },
+            {
+                //is subscribed, subscriber count 
+
+                $addFields: {// keep the all the current values + add additionals fields
+                    subscribersCount: {
+                        $size: "$subscribers" // used $ as it is filed for subscribers 
+                    },
+                    channelsSubscribedToCount: {
+                        $size: "$subscribedTo"
+                    },
+                    isSubscribed: {
+                        $condition: { // three parameters if then and else 
+                            if: { $in: [req.user?._id, " $subscribers.subscriber"] }, // this is array as well as in object but here we looked in object 
+                            then: true,
+                            else: false
+
+                        }
+                    }
+
+                }
+            },
+
+            {
+                //project -  projection of all value and give the selected one 
+                $project: {
+                    fullName: 1,
+                    username: 1,
+                    subscribersCount: 1,
+                    channelsSubscribedToCount: 1,
+                    avatar: 1,
+                    coverImage: 1,
+                    email: 1,
+
+
+                }
+            }
+            //console.log("channel") or what datatypes does aggregate returns basically (Array)-> you get array and under array there is multiple value of obejct 
+        ])
+
+    if (!channel?.length) {
+        throw new ApiError(404, "channeld does not exsits ")
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, channel[0], "User channel fetched successfully "))
+
+})
+
 export {
     registerUser,
     loginUser,
@@ -367,4 +459,5 @@ export {
     updateAccountDetails,
     updateUserAvatar,
     updateUserCoverImage,
+    getUserChannelProfile,
 }

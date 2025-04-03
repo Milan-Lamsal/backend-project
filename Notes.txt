@@ -526,3 +526,114 @@ Step-by-step debugging is crucial for backend development.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                      Subscription 
+           Writing Update Controllers for User Accounts in a Backend Application
+
+It focuses on writing and modifying update controllers for user accounts, specifically the edit functionality. By the end of this video, viewers will be able to efficiently handle most user-related controllers.
+
+Subscription Model Implementation
+ a new Subscription model is introduced:
+Separate from the User model to follow best practices.
+
+Includes two fields:
+subscriber – References the user who subscribes.
+channel – References the user being subscribed to.
+
+Uses timestamps (createdAt, updatedAt) for tracking changes.
+The model is committed with the message "Add subscription model".
+
+Controllers Implemented
+1. changeCurrentPassword
+Allows the logged-in user to update their password.
+Verifies the old password before updating.
+
+Uses bcrypt to hash the new password.
+2. getCurrentUser
+Retrieves and returns the currently logged-in user’s details.
+Uses middleware to populate req.user.
+
+3. updateAccountDetails
+Allows users to update their full name and email.
+Uses MongoDB’s $set operator to modify fields.
+Excludes the password field from the response for security.
+
+4. updateUserAvatar
+Handles avatar image uploads using Cloudinary.
+Validates the uploaded file before processing.
+Updates the avatar field in the database.
+
+5. updateUserCoverImage
+Similar to updateUserAvatar, but for the cover image.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                      MongoDB Aggregation Pipelines
+$match
+$project
+$lookup
+
+db.orders.aggregate ([{},{}]) -> array and object where each object is a storage
+[
+   {
+
+//firstpipeline
+$lookup:{            //->which document to join ?
+from:
+localField:
+foreignField:
+as: // this as is in array 
+   }
+ },
+
+ //secondpipeline
+ $addFields:{
+   author_details:{
+
+   }
+
+ }
+]
+
+1. Aggregation Pipelines
+A series of stages that process documents step by step.
+Each stage transforms the data and passes the output to the next stage.
+Executed using db.collection.aggregate() with an array of stages.
+
+2. Key Aggregation Stages
+🔹 $match – Filtering Documents
+Similar to SQL’s WHERE clause.
+Used to find specific documents based on given criteria.
+
+🔹 $lookup – Performing Joins
+Used for left joins between collections.
+Requires:
+
+from: Collection to join with.
+localField: Field from the input documents.
+foreignField: Field from the joined collection.
+as: Name of the resulting array field.
+Example: Joining users with subscribers and subscriptions.
+
+ $addFields – Adding/Modifying Fields
+Adds new fields or modifies existing ones.
+Useful for:
+Extracting the first element from an array (from $lookup).
+Calculating counts using $size.
+Using $cond (conditional logic) and $in to check values.
+Example: Creating subscribersCount, channelsSubscribedToCount, and isSubscribed.
+
+🔹 $project – Reshaping Data
+Controls which fields appear in the output.
+Helps reduce network traffic by only returning necessary fields.
+3. Practical Example: Fetching a User's Channel Profile
+API Endpoint: /api/v1/users/:username
+Steps:
+Extract username from the URL.
+Use $match to find the user.
+Use $lookup to:
+Fetch the user's subscribers.
+Fetch the channels the user has subscribed to.
+Use $addFields to compute counts and determine subscription status.
+Use $project to return only relevant fields like username, email, avatar, etc.
+
+4. Handling Output & Errors
+Aggregation pipelines return arrays of documents, even if only one document matches.
+In application logic, access the first element of the resulting array.
+Check if the username exists before processing.
